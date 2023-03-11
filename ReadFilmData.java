@@ -65,10 +65,26 @@ public class ReadFilmData {
 		
 		//System.out.println("\n"+binarySearch(films, (float) 1.5));
 		
-		//System.out.println("\n" + binarySearch(films, (float)1.5));	
-		String test = binarySearch(films, (float)5);
-		System.out.println(test);
-		//System.out.println((float)1.5);
+		//System.out.println("\n" + binarySearch(films, (float)1.5));
+		current = System.currentTimeMillis();
+		String test10000 = binarySearch(films, (float)3.19);
+		System.out.println("BinarySearch with 10000 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test5000 = binarySearch(films5000, (float)3.19);
+		System.out.println("BinarySearch with 5000 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test1000 = binarySearch(films1000, (float)3.19);
+		System.out.println("BinarySearch with 1000 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test100 = binarySearch(films100, (float)3.19);
+		System.out.println("BinarySearch with 100 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test10 = binarySearch(films10, (float)3.19);
+		System.out.println("BinarySearch with 10 data: " +(System.currentTimeMillis()-current));
 	}
 	
 	//MergeSort Algorithm
@@ -156,10 +172,11 @@ public class ReadFilmData {
 		}
 	}
 	
+	/*Searches the target length in the film array and prints outs all the matching results*/
 	public static String binarySearch(Film[] arr, float targetLength) {
 		int upperB = arr.length-1;
 		int lowerB = 0;
-		int[] indexes = new int[50];
+		int[] indexes = new int[40];
 		int count = 0;
 		while(lowerB <= upperB) {
 			int mid = (upperB + lowerB) / 2;
@@ -174,22 +191,26 @@ public class ReadFilmData {
 				lowerB = mid + 1;
 			}
 		}
-		System.out.println("hobebe");
-		System.out.println(indexes[count]);
-		if(indexes!=null) {
+		if(count>0) {
 			String out="\n Indexes that have the same " + targetLength + ": \n";
 			int leftIndex = indexes[0] - 1;
-			while(leftIndex >= 0 && arr[leftIndex] == arr[indexes[0]]) {
+			while(leftIndex >= 0 && (arr[leftIndex].compareTo(targetLength))==0) {
 				indexes[count] = leftIndex;
 				count++;
+				leftIndex--;
 			}
 			int rightIndex = indexes[0] + 1;
-			while(rightIndex < arr.length && arr[rightIndex] == arr[indexes[0]]) {
+			while(rightIndex < arr.length && (arr[rightIndex].compareTo(targetLength))==0) {
 				indexes[count] = rightIndex;
 				count++;
+				rightIndex++;
 			}
-			for(int a : indexes) {
+			/*for(int a : indexes) {
 				out += arr[a].toString()+"\n";
+			}*/
+			//Iterating only how many times we found the matching length
+			for(int j = 0; j < count; j++) {
+				out += arr[indexes[j]].toString()+"\n";
 			}
 			return out;
 		}else {
