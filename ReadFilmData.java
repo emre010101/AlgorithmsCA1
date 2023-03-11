@@ -217,8 +217,11 @@ public class ReadFilmData {
 			return "Not an existing " + targetLength + "!";
 		}
 	}
-}
 
+	public static void addnewFilm(String title, String genre, String directorName, float length, float rating) {
+		
+	}
+}
 
 class Film implements Comparable<Object>{
 
