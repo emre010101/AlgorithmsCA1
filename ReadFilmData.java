@@ -28,19 +28,6 @@ public class ReadFilmData {
 		Film[] films100 = createNew(films, 100);
 		Film[] films1000 = createNew(films, 1000);
 		Film[] films5000 = createNew(films, 5000);
-		//print(films5000);
-		//Check the arrays created
-		System.out.println("\nfilms10");
-		print(films10);
-		System.out.println("\nfilms100");
-		print(films100, 10);
-		System.out.println("\nfilms1000");
-		print(films1000, 10);
-		System.out.println("\nfilms5000");
-		print(films5000, 10);
-		System.out.println("\nfilms10000");
-		print(films, 10);
-		System.out.println("\n"+"should be true " + (films[0]==films10[0])); //check this out
 		
 		//Passing the array and copy arrays to mergeSort to see the time complexity
 		double current = System.currentTimeMillis();
@@ -63,10 +50,25 @@ public class ReadFilmData {
 		mergeSort(films);
 		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
 		
+		//print(films);
+		/*System.out.println("\nfilms10");
+		print(films10);
+		System.out.println("\nfilms100");
+		print(films100, 10);
+		System.out.println("\nfilms1000");
+		print(films1000, 10);
+		System.out.println("\nfilms5000");
+		print(films5000, 10);
+		System.out.println("\nfilms10000");
+		print(films, 10);
+		System.out.println("\n"+"should be true " + (films[0]==films10[0])); //check this out*/
 		
-		System.out.println("\n"+binarySearch(films, (float) 1.5));
+		//System.out.println("\n"+binarySearch(films, (float) 1.5));
 		
-		System.out.println("\n" + binarySearch(films, (float)1.5));		
+		//System.out.println("\n" + binarySearch(films, (float)1.5));	
+		String test = binarySearch(films, (float)5);
+		System.out.println(test);
+		//System.out.println((float)1.5);
 	}
 	
 	//MergeSort Algorithm
@@ -102,7 +104,17 @@ public class ReadFilmData {
 			if(left[l].compareTo(right[r])<0) {
 				actual[i]=left[l];
 				i++; l++;
-			}else {
+			}else if(left[l].compareTo(right[r])==0) {
+				if(left[l].c1compareTo(right[r])<0) { //if right ID is bigger than left
+					actual[i] = left[l];
+					i++; l++;
+				}
+				else {
+					actual[i] = right[r];
+					i++; r++;
+				}
+			}
+			else {
 				actual[i]=right[r];
 				i++; r++;
 			}
@@ -145,13 +157,14 @@ public class ReadFilmData {
 	}
 	
 	public static String binarySearch(Film[] arr, float targetLength) {
-		int upperB = arr.length;
+		int upperB = arr.length-1;
 		int lowerB = 0;
-		int[] indexes = new int[20];
+		int[] indexes = new int[50];
 		int count = 0;
 		while(lowerB <= upperB) {
 			int mid = (upperB + lowerB) / 2;
-			if(arr[mid].compareTo(targetLength)==1) {
+			if((arr[mid].compareTo(targetLength))==0) {
+				//System.out.println("test");
 				indexes[count] = mid;
 				count++;
 				break;
@@ -161,8 +174,10 @@ public class ReadFilmData {
 				lowerB = mid + 1;
 			}
 		}
+		System.out.println("hobebe");
+		System.out.println(indexes[count]);
 		if(indexes!=null) {
-			String out="\n Indexes that have the same values: \n";
+			String out="\n Indexes that have the same " + targetLength + ": \n";
 			int leftIndex = indexes[0] - 1;
 			while(leftIndex >= 0 && arr[leftIndex] == arr[indexes[0]]) {
 				indexes[count] = leftIndex;
@@ -174,7 +189,7 @@ public class ReadFilmData {
 				count++;
 			}
 			for(int a : indexes) {
-				out += arr[a].toString();
+				out += arr[a].toString()+"\n";
 			}
 			return out;
 		}else {
@@ -270,6 +285,9 @@ class Film implements Comparable<Object>{
 		if(left-right<0) {
 			return -1;
 		}
+		else if(left-right==0) {
+			return 0;
+		}
 		else {
 			return 1;
 		}
@@ -277,12 +295,16 @@ class Film implements Comparable<Object>{
 	}
 	/*Overloading the method in order to use in binarySearch*/
 	@Overload
-	public int compareTo(Float length) {
+	public int compareTo(Float lngth) {
 		
 		float left = this.length;
-		if(left-length<0) {
+		if(Float.compare(left, lngth)==0) {
+			return 0;
+		}
+		else if(Float.compare(left, lngth)<0) {
 			return -1;
-		}else {
+		}
+		else {
 			return 1;
 		}
 	}
@@ -290,6 +312,14 @@ class Film implements Comparable<Object>{
 	//If the two film has the same length compare according to ID
 	public int c1compareTo(Object obj) {
 		
+		Film flm = (Film) obj; //Casting to film object
+		int left = this.filmID;
+		int right = flm.getFilmID();
+		if(left-right<0) {
+			return -1;
+		}else {
+			return 1;
+		}
 	}
 
 	@Override
