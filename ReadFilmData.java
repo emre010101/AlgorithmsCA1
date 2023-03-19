@@ -27,13 +27,19 @@ public class ReadFilmData {
 		}
 		sc.close();  //closes the scanner
 		
+		//Movie adding test
+		addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
+		addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)-5, (float)55);
+		//System.out.println(films[10001]);
+		
 		Film[] films10 = createNew(films, 10);
 		Film[] films100 = createNew(films, 100);
 		Film[] films1000 = createNew(films, 1000);
 		Film[] films5000 = createNew(films, 5000);
 		
+		
 		//Passing the array and copy arrays to mergeSort to see the time complexity
-		/*double current = System.currentTimeMillis();
+		double current = System.currentTimeMillis();/*
 		mergeSort(films10);
 		System.out.println("\n"+"MergeSort 10 data: " + (System.currentTimeMillis()-current));
 		
@@ -48,13 +54,14 @@ public class ReadFilmData {
 		current = System.currentTimeMillis();
 		mergeSort(films5000);
 		System.out.println("MergeSort 5000 data: " + (System.currentTimeMillis()-current));
-		
+		*/
 		current = System.currentTimeMillis();
 		mergeSort(films);
-		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));*/
+		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
+		//System.out.println(films[10001]);
 		
-		addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)1.05, (float)2.05);
-		print(films);
+		
+		//print(films);
 		/*System.out.println("\nfilms10");
 		print(films10);
 		System.out.println("\nfilms100");
@@ -80,6 +87,7 @@ public class ReadFilmData {
 		
 		current = System.currentTimeMillis();
 		String test1000 = binarySearch(films1000, (float)3.19);
+		System.out.println(test1000);
 		System.out.println("BinarySearch with 1000 data: " +(System.currentTimeMillis()-current));
 		
 		current = System.currentTimeMillis();
@@ -224,8 +232,19 @@ public class ReadFilmData {
 
 	/*Adding new movie to array, incrementing size +1 to have space for new movie*/
 	public static void addnewFilm(String title, String genre, String directorName, float length, float rating) {
-		films = createNew(films, films.length+1);
-		films[films.length-1] = new Film(films.length, genre, directorName, title, (float)length, (float)rating);
+		try {
+			if(length<0) {
+				throw new IncorrectLengthException(title + " length can't be less than zero");
+			}
+			if(length==0) {
+				throw new IncorrectLengthException(title + " length can't be 0");
+			}
+			films = createNew(films, films.length+1);
+			films[films.length-1] = new Film(films.length, genre, directorName, title, (float)length, (float)rating);	
+			System.out.println("The movie: " + title + " succesfully has been saved.");
+		}catch(IncorrectLengthException e) {
+			System.out.println(e);
+		}
 	}
 	
 	//public static void addFilm(String genre,)
