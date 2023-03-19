@@ -3,6 +3,9 @@ import java.io.File;
 import java.util.*;
 
 public class ReadFilmData {
+	
+	//Made it global variable to have access in the addnewFilm method
+	static Film[] films = new Film[10000];
 
 	public static void main(String[] args) throws Exception{
 		//parsing and reading the CSV file data into the film (object) array
@@ -10,7 +13,7 @@ public class ReadFilmData {
         File directory = new File("C:\\Code\\Algorithms\\src\\CA");
   		String name = directory.getAbsolutePath() + "//Film.csv";
 		Scanner sc = new Scanner(new File(name));
-		Film[] films = new Film[10000];
+		
 		
 		// this will just print the header in CSV file
 		sc.nextLine();
@@ -30,7 +33,7 @@ public class ReadFilmData {
 		Film[] films5000 = createNew(films, 5000);
 		
 		//Passing the array and copy arrays to mergeSort to see the time complexity
-		double current = System.currentTimeMillis();
+		/*double current = System.currentTimeMillis();
 		mergeSort(films10);
 		System.out.println("\n"+"MergeSort 10 data: " + (System.currentTimeMillis()-current));
 		
@@ -48,9 +51,10 @@ public class ReadFilmData {
 		
 		current = System.currentTimeMillis();
 		mergeSort(films);
-		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
+		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));*/
 		
-		//print(films);
+		addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)1.05, (float)2.05);
+		print(films);
 		/*System.out.println("\nfilms10");
 		print(films10);
 		System.out.println("\nfilms100");
@@ -66,7 +70,7 @@ public class ReadFilmData {
 		//System.out.println("\n"+binarySearch(films, (float) 1.5));
 		
 		//System.out.println("\n" + binarySearch(films, (float)1.5));
-		current = System.currentTimeMillis();
+		/*current = System.currentTimeMillis();
 		String test10000 = binarySearch(films, (float)3.19);
 		System.out.println("BinarySearch with 10000 data: " +(System.currentTimeMillis()-current));
 		
@@ -84,7 +88,7 @@ public class ReadFilmData {
 		
 		current = System.currentTimeMillis();
 		String test10 = binarySearch(films10, (float)3.19);
-		System.out.println("BinarySearch with 10 data: " +(System.currentTimeMillis()-current));
+		System.out.println("BinarySearch with 10 data: " +(System.currentTimeMillis()-current));*/
 	}
 	
 	//MergeSort Algorithm
@@ -153,7 +157,7 @@ public class ReadFilmData {
 		}
 		if(n>arr.length) { //if the new array length bigger than existing array 
 			for(int i=arr.length; i<n; i++) {
-				result[i]=arr[i];
+				result[i]=null; //Set the uninitialized elements to null
 			}
 		}
 		return result;
@@ -218,9 +222,13 @@ public class ReadFilmData {
 		}
 	}
 
+	/*Adding new movie to array, incrementing size +1 to have space for new movie*/
 	public static void addnewFilm(String title, String genre, String directorName, float length, float rating) {
-		
+		films = createNew(films, films.length+1);
+		films[films.length-1] = new Film(films.length, genre, directorName, title, (float)length, (float)rating);
 	}
+	
+	//public static void addFilm(String genre,)
 }
 
 class Film implements Comparable<Object>{
