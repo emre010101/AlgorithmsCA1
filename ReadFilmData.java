@@ -27,25 +27,42 @@ public class ReadFilmData {
 		}
 		sc.close();  //closes the scanner
 		
-		//Testing HighRatedInLimit(float limit)
-		//Film[] see = HighRatedInLimit((float)5);
-		//System.out.println("The movies in the limit we asked: 5");
-		//print(see);
+		//Creating copy of films array to test in insertion sort to see the time Complexity
+		Film[] filmsCopy = Arrays.copyOf(films, films.length);
+		Film[] filmsCopy10 = createNew(films, 10);
+		Film[] filmsCopy100 = createNew(films, 100);
+		Film[] filmsCopy1000 = createNew(films, 1000);
+		Film[] filmsCopy5000 = createNew(films, 5000);
 		
-		//Movie adding test
-		//addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
-		//addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)-5, (float)55);
-		//System.out.println(films[10001]);
+		double current = System.currentTimeMillis();
+		insertionSort(filmsCopy10);
+		System.out.println("InsertionSort 10 data: " + (System.currentTimeMillis()-current));
 		
-		/*Film[] films10 = createNew(films, 10);
+		current = System.currentTimeMillis();
+		insertionSort(filmsCopy100);
+		System.out.println("InsertionSort 100 data: " + (System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		insertionSort(filmsCopy1000);
+		System.out.println("InsertionSort 1000 data: " + (System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		insertionSort(filmsCopy5000);
+		System.out.println("InsertionSort 5000 data: " + (System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		insertionSort(filmsCopy);
+		System.out.println("InsertionSort 10000 data: " + (System.currentTimeMillis()-current));
+		
+		//Creating copy arrays for MergeSort
+		Film[] films10 = createNew(films, 10);
 		Film[] films100 = createNew(films, 100);
 		Film[] films1000 = createNew(films, 1000);
 		Film[] films5000 = createNew(films, 5000);
-		*/
 		
 		//Passing the array and copy arrays to mergeSort to see the time complexity
-		//double current = System.currentTimeMillis();/*
-		/*mergeSort(films10);
+		current = System.currentTimeMillis();
+		mergeSort(films10);
 		System.out.println("\n"+"MergeSort 10 data: " + (System.currentTimeMillis()-current));
 		
 		current = System.currentTimeMillis();
@@ -59,14 +76,13 @@ public class ReadFilmData {
 		current = System.currentTimeMillis();
 		mergeSort(films5000);
 		System.out.println("MergeSort 5000 data: " + (System.currentTimeMillis()-current));
-		*/
-		//current = System.currentTimeMillis();
+		
+		current = System.currentTimeMillis();
 		mergeSort(films);
-		//System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
+		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
 		//System.out.println(films[10001]);
 		
-		
-		print(films);
+		//print(films);
 		/*System.out.println("\nfilms10");
 		print(films10);
 		System.out.println("\nfilms100");
@@ -82,28 +98,57 @@ public class ReadFilmData {
 		//System.out.println("\n"+binarySearch(films, (float) 1.5));
 		
 		//System.out.println("\n" + binarySearch(films, (float)1.5));
-		/*current = System.currentTimeMillis();
-		String test10000 = binarySearch(films, (float)3.19);
-		System.out.println("BinarySearch with 10000 data: " +(System.currentTimeMillis()-current));
-		
 		current = System.currentTimeMillis();
-		String test5000 = binarySearch(films5000, (float)3.19);
-		System.out.println("BinarySearch with 5000 data: " +(System.currentTimeMillis()-current));
-		
-		current = System.currentTimeMillis();
-		String test1000 = binarySearch(films1000, (float)3.19);
-		System.out.println(test1000);
-		System.out.println("BinarySearch with 1000 data: " +(System.currentTimeMillis()-current));
+		String test10 = binarySearch(films10, (float)3.19);
+		System.out.println("\n" + "BinarySearch with 10 data: " +(System.currentTimeMillis()-current));
 		
 		current = System.currentTimeMillis();
 		String test100 = binarySearch(films100, (float)3.19);
 		System.out.println("BinarySearch with 100 data: " +(System.currentTimeMillis()-current));
 		
 		current = System.currentTimeMillis();
-		String test10 = binarySearch(films10, (float)3.19);
-		System.out.println("BinarySearch with 10 data: " +(System.currentTimeMillis()-current));*/
+		String test1000 = binarySearch(films1000, (float)3.19);
+		//System.out.println(test1000);
+		System.out.println("BinarySearch with 1000 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test5000 = binarySearch(films5000, (float)3.19);
+		System.out.println("BinarySearch with 5000 data: " +(System.currentTimeMillis()-current));
+		
+		current = System.currentTimeMillis();
+		String test10000 = binarySearch(films, (float)3.19);
+		System.out.println("BinarySearch with 10000 data: " +(System.currentTimeMillis()-current));
+		
+		//PART 1 FINISHES HERE ----------------------------------------------------------------------------------------------------
+
+		
+		//Movie adding test
+		//addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
+		//addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)5, (float)55);
+		//System.out.println(films[10001]);
+	
+		
+		
+		//Testing HighRatedInLimit(float limit)
+		//Film[] see = HighRatedInLimit((float)5);
+		//System.out.println("The movies in the limit we asked: 5");
+		//print(see);
+		
+		
+
 	}
 	
+	//Copy array
+	public static Film[] copyArray(Film[] arr) {
+		int len = arr.length;
+		Film [] nat = new Film[len]; //Initialising new array
+		for(int i=0; i<len; i++) {
+			nat[i] = arr[i];
+		}
+		return nat;
+	}
+	
+	//Part 1
 	//MergeSort Algorithm
 	//I used the bold youtuber guy to get inspiration
 	public static void mergeSort(Film[] arr) {
@@ -162,6 +207,22 @@ public class ReadFilmData {
 		}
 	}
 
+	//Part 1
+	//To be compared with mergeSort
+	public static void insertionSort(Film arr[]) {
+		int n = arr.length;
+		for (int i = 1; i < n; ++i) {
+			Film key = arr[i];
+			int j = i - 1;
+			while (j >= 0 && arr[j].compareTo(key) > 0) {
+				arr[j + 1] = arr[j];
+				j = j - 1;
+			}
+			arr[j + 1] = key;
+		}
+	}
+	
+	//Part 1
 	//In order to create new arrays of the exist array for seeing the time complexity
 	public static Film[] createNew(Film[] arr, int n) {
 		Film[] result = new Film[n];
@@ -189,6 +250,7 @@ public class ReadFilmData {
 		}
 	}
 	
+	//Part 2
 	/*Searches the target length in the film array and prints outs all the matching results*/
 	public static String binarySearch(Film[] arr, float targetLength) {
 		int upperB = arr.length-1;
@@ -235,6 +297,7 @@ public class ReadFilmData {
 		}
 	}
 
+	//Part 3
 	/*Adding new movie to array, incrementing size +1 to have space for new movie*/
 	public static void addnewFilm(String title, String genre, String directorName, float length, float rating) {
 
@@ -253,6 +316,7 @@ public class ReadFilmData {
 		}
 	}
 	
+	//Part 3
 	/*Finds the movies with the highest rate within the sum of the lengths in limit
 	 * Calls the quick sort the array with high rate based*/
 	public static Film[] HighRatedInLimit(float limit) {
@@ -262,12 +326,13 @@ public class ReadFilmData {
 		int count = discountLength(limit);
 		Film[] ranked = new Film[count]; //Declaring new Film array with the number indicates how many high rated movie length sum could be in the limit
 		//print(films);
-		ranked = copy(films, count);
+		ranked = copyHighRated(films, count);
 		return ranked;
 	}
 	
+	//Part 3
 	//to copy the sorted array to new array
-	private static Film[] copy(Film[] flms, int count) {
+	private static Film[] copyHighRated(Film[] flms, int count) {
 		int lastIndex = flms.length-1;
 		//System.out.println(lastIndex);
 		Film[] high = new Film[count];
@@ -282,6 +347,7 @@ public class ReadFilmData {
 		
 	}
 
+	//Part 3
 	public static void quickSort(Film[] arr, int low, int high) {
 		if(low<high) {
 			//pi is the pivot to divide the array
