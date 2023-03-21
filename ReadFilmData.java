@@ -232,7 +232,7 @@ public class ReadFilmData {
 		}
 		if(n>arr.length) { //if the new array length bigger than existing array 
 			for(int i=arr.length; i<n; i++) {
-				result[i]=null; //Set the uninitialized elements to null
+				result[i]=null; //Set the uninitialised elements to null
 			}
 		}
 		return result;
@@ -254,10 +254,10 @@ public class ReadFilmData {
 	//Part 2
 	/*Searches the target length in the film array and prints outs all the matching results*/
 	public static String binarySearch(Film[] arr, float targetLength) {
-		int upperB = arr.length-1;
-		int lowerB = 0;
-		int[] indexes = new int[40];
-		int count = 0;
+		int upperB = arr.length-1; //Upper Bound 
+		int lowerB = 0; //Lower Bound
+		int[] indexes = new int[40]; //To save the index numbers found with the same length
+		int count = 0; //to iterate the indexes array
 		while(lowerB <= upperB) {
 			int mid = (upperB + lowerB) / 2;
 			if((arr[mid].compareTo(targetLength))==0) {
@@ -481,8 +481,8 @@ class Film implements Comparable<Object>{
 	public int compareTo(Object obj) {
 
 		/*
-		Edit this section so it compares the appropriate
-		column you wish to sort by
+		Left side is the where the method was called and 
+		right is the parameter we passed to method
 		*/
 		Film flm = (Film) obj;
 		float left = this.length;
@@ -496,7 +496,6 @@ class Film implements Comparable<Object>{
 		else {
 			return 1;
 		}
-		
 	}
 	/*Overloading the method in order to use in binarySearch*/
 	public int compareTo(Float lngth) {
