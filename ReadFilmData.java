@@ -150,15 +150,14 @@ public class ReadFilmData {
 	
 	//Part 1
 	//MergeSort Algorithm
-	//I used the bold youtuber guy to get inspiration
 	public static void mergeSort(Film[] arr) {
 		int length = arr.length;
-		if(length<=1) return;
+		if(length<=1) return; //if it's totally divided
 		int mid = length / 2;
 		
-		Film [] leftArr = new Film[mid];
-		Film [] rightArr = new Film[length-mid];
-		
+		Film [] leftArr = new Film[mid]; //half of the array
+		Film [] rightArr = new Film[length-mid]; //the rest of the half
+		//copying from original array to left and right array
 		int i =0;
 		int j=0;
 		for(; i<length; i++) {
@@ -176,27 +175,29 @@ public class ReadFilmData {
 
 	private static void merge(Film[] left, Film[] right, Film[] actual) {
 		int leftSize = actual.length/2;
-		int rightSize = actual.length-leftSize;
+		int rightSize = actual.length-leftSize; 
 		int i =0, l=0, r=0;
-		while(l<leftSize && r<rightSize) {
-			if(left[l].compareTo(right[r])<0) {
+		while(l<leftSize && r<rightSize) {//until left or right run out movies
+			if(left[l].compareTo(right[r])<0) {//if left length smaller then  right
 				actual[i]=left[l];
 				i++; l++;
-			}else if(left[l].compareTo(right[r])==0) {
-				if(left[l].c1compareTo(right[r])<0) { //if right ID is bigger than left
+			}else if(left[l].compareTo(right[r])==0) {//if the length is same
+				if(left[l].c1compareTo(right[r])<0) {
+					//if the left ID is smaller than right
 					actual[i] = left[l];
 					i++; l++;
 				}
-				else {
+				else {//otherwise save the left to actual
 					actual[i] = right[r];
 					i++; r++;
 				}
-			}
+			}//if the right length smaller
 			else {
 				actual[i]=right[r];
 				i++; r++;
 			}
 		}
+		//check if any movie left in right or left
 		while(l<leftSize) {
 			actual[i]=left[l];
 			i++; l++;
@@ -498,7 +499,6 @@ class Film implements Comparable<Object>{
 		
 	}
 	/*Overloading the method in order to use in binarySearch*/
-	@Overload
 	public int compareTo(Float lngth) {
 		
 		float left = this.length;
