@@ -77,27 +77,16 @@ public class ReadFilmData {
 		mergeSort(films5000);
 		System.out.println("MergeSort 5000 data: " + (System.currentTimeMillis()-current));
 		
+		System.out.println("Before adding the movie: " + films.length);
+		addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.17, (float)3.19);
+		System.out.println("After adding the movie: " + films.length);
 		current = System.currentTimeMillis();
 		mergeSort(films);
 		System.out.println("MergeSort 10000 data: " + (System.currentTimeMillis()-current));
-		//System.out.println(films[10001]);
-		
-		//print(films);
-		/*System.out.println("\nfilms10");
-		print(films10);
-		System.out.println("\nfilms100");
-		print(films100, 10);
-		System.out.println("\nfilms1000");
-		print(films1000, 10);
-		System.out.println("\nfilms5000");
-		print(films5000, 10);
-		System.out.println("\nfilms10000");
-		print(films, 10);
-		System.out.println("\n"+"should be true " + (films[0]==films10[0])); //check this out*/
-		
-		//System.out.println("\n"+binarySearch(films, (float) 1.5));
-		
-		//System.out.println("\n" + binarySearch(films, (float)1.5));
+		System.out.println("To compare other movie with the one we addded " + "\n" + films[9999]);
+		System.out.println(films[10000] + "\n" + "Above we test if the movie we add is sorted or not: " );
+	
+		//Binary Search Time Complexity Experiment
 		current = System.currentTimeMillis();
 		String test10 = binarySearch(films10, (float)3.19);
 		System.out.println("\n" + "BinarySearch with 10 data: " +(System.currentTimeMillis()-current));
@@ -119,13 +108,40 @@ public class ReadFilmData {
 		String test10000 = binarySearch(films, (float)3.19);
 		System.out.println("BinarySearch with 10000 data: " +(System.currentTimeMillis()-current));
 		
+		
+		System.out.println("\n"+"The test on array with 1000 movies: " + test1000);
+		
+		//Binary search nanoTime experiment
+		current = System.nanoTime();
+		String nanotest10 = binarySearch(films10, (float)3.19);
+		System.out.println("\n" + "BinarySearch with 10 data: " +(System.nanoTime()-current));
+		
+		current = System.nanoTime();
+		String nanotest100 = binarySearch(films100, (float)3.19);
+		System.out.println("BinarySearch with 100 data: " +(System.nanoTime()-current));
+		
+		current = System.nanoTime();
+		String nanotest1000 = binarySearch(films1000, (float)3.19);
+		System.out.println("BinarySearch with 1000 data: " +(System.nanoTime()-current));
+		
+		current = System.nanoTime();
+		String nanotest5000 = binarySearch(films5000, (float)3.19);
+		System.out.println("BinarySearch with 5000 data: " +(System.nanoTime()-current));
+		
+		current = System.nanoTime();
+		String nanotest10000 = binarySearch(films, (float)3.19);
+		System.out.println("BinarySearch with 10000 data: " +(System.nanoTime()-current));
+		
+		System.out.println("\n"+"The test on array with 1000 movies: " + nanotest1000);
+		
+		
 		//PART 1 FINISHES HERE ----------------------------------------------------------------------------------------------------
 
-		
+		//Part 2
 		//Movie adding test
 		//addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
 		//addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)5, (float)55);
-		//System.out.println(films[10001]);
+		//System.out.println(films[10000]);
 	
 		
 		
@@ -134,8 +150,8 @@ public class ReadFilmData {
 		//System.out.println("The movies in the limit we asked: 5");
 		//print(see);
 		
-		
-
+		/*System.out.println("\n"+"\n" + "let see the movies" + "\n");
+		print(films);*/
 	}
 	
 	//Copy array
@@ -251,33 +267,32 @@ public class ReadFilmData {
 		}
 	}
 	
-	//Part 2
+	//Part 1 Question 3
 	/*Searches the target length in the film array and prints outs all the matching results*/
 	public static String binarySearch(Film[] arr, float targetLength) {
 		int upperB = arr.length-1; //Upper Bound 
 		int lowerB = 0; //Lower Bound
 		int[] indexes = new int[40]; //To save the index numbers found with the same length
 		int count = 0; //to iterate the indexes array
-		while(lowerB <= upperB) {
+		while(lowerB <= upperB) { //iterate until lover bound reach to upper bound
 			int mid = (upperB + lowerB) / 2;
-			if((arr[mid].compareTo(targetLength))==0) {
-				//System.out.println("test");
-				indexes[count] = mid;
+			if((arr[mid].compareTo(targetLength))==0) {//check if the length is the same
+				indexes[count] = mid;//save the index number
 				count++;
 				break;
-			}else if(arr[mid].compareTo(targetLength)>1) {
+			}else if(arr[mid].compareTo(targetLength)>1) {//if the target is smaller than mid
 				upperB = mid - 1;
 			}else {
 				lowerB = mid + 1;
 			}
 		}
 		if(count>0) {
-			String out="\n Indexes that have the same " + targetLength + ": \n";
-			int leftIndex = indexes[0] - 1;
+			String out="\n Indexes that have the same length as " + targetLength + ": \n";
+			int leftIndex = indexes[0] - 1; //where it was found to left
 			while(leftIndex >= 0 && (arr[leftIndex].compareTo(targetLength))==0) {
 				indexes[count] = leftIndex;
 				count++;
-				leftIndex--;
+				leftIndex--; //go further left to see if they are also same
 			}
 			int rightIndex = indexes[0] + 1;
 			while(rightIndex < arr.length && (arr[rightIndex].compareTo(targetLength))==0) {
@@ -285,9 +300,6 @@ public class ReadFilmData {
 				count++;
 				rightIndex++;
 			}
-			/*for(int a : indexes) {
-				out += arr[a].toString()+"\n";
-			}*/
 			//Iterating only how many times we found the matching length
 			for(int j = 0; j < count; j++) {
 				out += arr[indexes[j]].toString()+"\n";
@@ -298,7 +310,7 @@ public class ReadFilmData {
 		}
 	}
 
-	//Part 3
+	//Part 2
 	/*Adding new movie to array, incrementing size +1 to have space for new movie*/
 	public static void addnewFilm(String title, String genre, String directorName, float length, float rating) {
 
@@ -307,9 +319,9 @@ public class ReadFilmData {
 				throw new IncorrectLengthException(title + " length can't be less than zero");
 			}
 			if(length==0) {
-				throw new IncorrectLengthException(title + " length can't be 0");
+				throw new IncorrectLengthException(title + " length can not be 0");
 			}
-			films = createNew(films, films.length+1);
+			films = createNew(films, (films.length+1));
 			films[films.length-1] = new Film(films.length, genre, directorName, title, (float)length, (float)rating);	
 			System.out.println("The movie: " + title + " succesfully has been saved.");
 		}catch(IncorrectLengthException e) {
