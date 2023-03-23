@@ -139,16 +139,16 @@ public class ReadFilmData {
 
 		//Part 2
 		//Movie adding test
-		//addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
-		//addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)5, (float)55);
+		addnewFilm("Spiderman", "Fiction", "Quantin Tarantino", (float)3.19, (float)3.19);
+		addnewFilm("Batman", "Fiction", "Quantin Tarantino", (float)5, (float)55);
 		//System.out.println(films[10000]);
 	
 		
 		
 		//Testing HighRatedInLimit(float limit)
-		//Film[] see = HighRatedInLimit((float)5);
-		//System.out.println("The movies in the limit we asked: 5");
-		//print(see);
+		Film[] see = HighRatedInLimit((float)5);
+		System.out.println("The movies in the limit we asked: 5");
+		print(see);
 		
 		/*System.out.println("\n"+"\n" + "let see the movies" + "\n");
 		print(films);*/
@@ -380,7 +380,7 @@ public class ReadFilmData {
 		//Iterating from left to right until pivot
 		for(int j=low; j<=high-1; j++) {
 			//if current ratio smaller than the pivot ratio
-			if((float)arr[j].ratio()<pivot) {
+			if((float)arr[j].ratio()<=pivot) {
 				//increment index of smaller element
 				i++;
 				swap(arr, i, j);
