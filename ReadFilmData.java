@@ -145,7 +145,7 @@ public class ReadFilmData {
 	
 		
 		
-		//Testing HighRatedInLimit(float limit)
+		System.out.println("\n"+"Testing HighRatedInLimit(float limit)");
 		Film[] see = HighRatedInLimit((float)5);
 		System.out.println("The movies in the limit we asked: 5");
 		print(see);
@@ -333,12 +333,11 @@ public class ReadFilmData {
 	/*Finds the movies with the highest rate within the sum of the lengths in limit
 	 * Calls the quick sort the array with high rate based*/
 	public static Film[] HighRatedInLimit(float limit) {
-		//Film [] ranked = new Film[15];
 		int n = films.length;
 		quickSort(films, 0, n-1); //Calling the quick sort with starting and end index
 		int count = discountLength(limit);
-		Film[] ranked = new Film[count]; //Declaring new Film array with the number indicates how many high rated movie length sum could be in the limit
-		//print(films);
+		//Declaring new Film array with the number indicates how many high rated movie length sum could be in the limit
+		Film[] ranked = new Film[count]; 
 		ranked = copyHighRated(films, count);
 		return ranked;
 	}
@@ -347,7 +346,6 @@ public class ReadFilmData {
 	//to copy the sorted array to new array
 	private static Film[] copyHighRated(Film[] flms, int count) {
 		int lastIndex = flms.length-1;
-		//System.out.println(lastIndex);
 		Film[] high = new Film[count];
 		int j = 0; //index number for high
 		//Going from last to last-count
@@ -355,7 +353,6 @@ public class ReadFilmData {
 			high[j] = flms[i];
 			j++;
 		}
-		//print(high);
 		return high;
 		
 	}
@@ -404,10 +401,10 @@ public class ReadFilmData {
 		int count=0;
 		while(lim>0) {
 			lim = lim-(float)(films[lastIndex].getLength());
-			lastIndex--;
-			count++;
+			lastIndex--; //iterating from last to begining
+			count++; //movies count
 		}
-		if(lim<0) {
+		if(lim<0) {//length can not be exceeded
 			count--;
 		}
 		return count;
